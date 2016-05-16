@@ -485,17 +485,16 @@ span{
     position: absolute;
     top: 45%;
     margin-top: -45px;
-    margin-left: -35px;
     width: 70px;
     height: 90px;
     opacity: 0;    
 }
 .left {
-   left: 1%;
+    left: 30px;
  }
   
-  .right {
-    left: 99%;
+.right {
+    right: 30px;
   }
   
   
