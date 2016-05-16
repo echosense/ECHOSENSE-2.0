@@ -159,7 +159,7 @@ var select_icon_mark=0;
 var bgOpacity=0;
 var canvasbg;
 var bgcolor;
-var selectOpacity=1;
+var selectOpacity=0;
 var animatemark=0;
 var animateOpacity=0;
 var spanOpacity=0;
@@ -299,7 +299,7 @@ function setup(){
 
   arrow_right_.onclick = function(){
     animatemark2+=1;
-      
+    selectOpacity=0;  
       if(animatemark2>=3){
           animatemark2=0;
       }
@@ -307,7 +307,7 @@ function setup(){
   }
     arrow_left_.onclick = function(){
     animatemark2-=1;
-      
+    selectOpacity=0;  
       if(animatemark2<=-1){
           animatemark2=2;
       }
@@ -860,15 +860,16 @@ function draw() {
         arrow_right.style("z-index",1);
        
       }
-    if(animatemark2==0){
+    if(animatemark2==0&&selectOpacity<=0.8){
         patha.style("animation","dash 3s cubic-bezier(0.58, 0.1, 0.25, 1.0) forwards");
         pathb.style("animation","dash 4.2s cubic-bezier(0.58, 0.1, 0.25, 1.0) forwards");
         pathc.style("animation","none");
         pathd.style("animation","none");
         pathe.style("animation","none");
         pathf.style("animation","none");
-        patha.style("opacity",1);
-        pathb.style("opacity",1);
+        selectOpacity+=0.01;
+        patha.style("opacity",selectOpacity);
+        pathb.style("opacity",selectOpacity);
         pathc.style("opacity",0);
         pathd.style("opacity",0);
         pathe.style("opacity",0);
@@ -876,11 +877,12 @@ function draw() {
        
           
         }
-        if(animatemark2==1){
+        if(animatemark2==1&&selectOpacity<=0.8){
         patha.style("opacity",0);
         pathb.style("opacity",0);
-        pathc.style("opacity",1);
-        pathd.style("opacity",1);
+        selectOpacity+=0.01;
+        pathc.style("opacity",selectOpacity);
+        pathd.style("opacity",selectOpacity);
         pathe.style("opacity",0);
         pathf.style("opacity",0);
         pathc.style("animation","dash 3s cubic-bezier(0.58, 0.1, 0.25, 1.0) forwards");
@@ -891,13 +893,14 @@ function draw() {
         pathf.style("animation","none");
           
         }
-        if(animatemark2==2){
+        if(animatemark2==2&&selectOpacity<=0.8){
         patha.style("opacity",0);
         pathb.style("opacity",0);
         pathc.style("opacity",0);
         pathd.style("opacity",0);
-        pathe.style("opacity",1);
-        pathf.style("opacity",1);
+        selectOpacity+=0.01;
+        pathe.style("opacity",selectOpacity);
+        pathf.style("opacity",selectOpacity);
         pathe.style("animation","dash 3s cubic-bezier(0.58, 0.1, 0.25, 1.0) forwards");
         pathf.style("animation","dash2 4.2s cubic-bezier(0.58, 0.1, 0.25, 1.0) forwards");
         pathc.style("animation","none");
@@ -960,8 +963,8 @@ function draw() {
           orange_mark=0;
         }
       }
-      var condition1 = window_Height-100;
-      if(bgOpacity>=2.99&&uiOpacity>=0&&mouseY<condition1&&mouseY>100&&back_mark==0) {
+      var condition1 = window_Height-150;
+      if(bgOpacity>=2.99&&uiOpacity>=0&&mouseY<condition1&&mouseY>150&&back_mark==0) {
         uitop-=0.3;
         uiOpacity-=0.02;
         uiHome.style("top",(uitop+"px"));
@@ -973,7 +976,7 @@ function draw() {
 
 
       if (bgOpacity>=2.99&&uiOpacity<=1&&back_mark==0) {
-        if(mouseY>condition1||mouseY<100){
+        if(mouseY>condition1||mouseY<150){
           uitop+=0.3;
           uiOpacity+=0.02;
           uiHome.style("top",(uitop+"px"));

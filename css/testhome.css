@@ -119,18 +119,45 @@ a, button {
 }
 
 .save{
-	margin-left: 8px;
+	margin-left: 10px;
 	cursor:pointer;
+  border: 2px solid #ccc;
+  border-radius: 50px;
+  width:64px;
+  height: 30px;
+  text-align:center;
+  line-height:30px; 
+  overflow:hidden; 
+
 }
 
+
 .print{
-	margin-left: 8px;
+	margin-left: 10px;
 	cursor:pointer;
+  border: 2px solid #ccc;
+  border-radius: 50px;
+  width:64px;
+  height: 30px;
+  text-align:center;
+  line-height:30px; 
+  overflow:hidden; 
 }
+
+
 
 .back{
 	cursor:pointer;
+  border: 2px solid #ccc;
+  border-radius: 50px;
+  width:64px;
+  height: 30px;
+  text-align:center;
+  line-height:30px; 
+  overflow:hidden; 
 }
+
+
 
 .shareul{
 	display: inline-block;
