@@ -853,11 +853,13 @@ function draw() {
         iconOpacity+=speed_a;
 
         //select_icon.style("opacity",iconOpacity);
-        select_icon.style("z-index",1);
-        arrow_left.style("opacity",iconOpacity);
-        arrow_left.style("z-index",1);
-        arrow_right.style("opacity",iconOpacity);
-        arrow_right.style("z-index",1);
+        if(iconOpacity<=0.8){
+          select_icon.style("z-index",1);
+          arrow_left.style("opacity",iconOpacity);
+          arrow_left.style("z-index",1);
+          arrow_right.style("opacity",iconOpacity);
+          arrow_right.style("z-index",1);
+        }
        
       }
     if(animatemark2==0&&selectOpacity<=0.8){
@@ -934,7 +936,7 @@ function draw() {
         canvasbg.style("z-index",3);
         bgcolor.style("z-index",1);
         uiHome.style("z-index",5);
-        speed_e+=0.0001;
+        speed_e+=0.0002;
         bgOpacity+=speed_e;
         canvasbg.style("opacity",bgOpacity);
         if(bgOpacity<=1){
@@ -944,6 +946,8 @@ function draw() {
         uiLefttop.style("opacity",bgOpacity);
         uiRight.style("opacity",bgOpacity);
         uiLeft.style("opacity",bgOpacity);
+        arrow_right.style("opacity",1-bgOpacity);
+        arrow_left.style("opacity",1-bgOpacity);
         uiHome.style("color","#999");
         uiHome.style("color","#999");
         uiLeft.style("fill","#999");
@@ -992,13 +996,16 @@ function draw() {
           bgOpacity=1;
           canvas_mark=0;//5.16
           once_mark=1;
+          speed_e=0;
         }
-        bgOpacity-=0.01;
+        bgOpacity-=0.02;
         canvasbg.style("opacity",bgOpacity);
         bgcolor.style("opacity",bgOpacity-0.05);
         uiRighttop.style("opacity",bgOpacity);
         uiLefttop.style("opacity",bgOpacity);
         homeCanvas.style("opacity",bgOpacity);//5.16
+        arrow_right.style("opacity",0.8);
+        arrow_left.style("opacity",0.8);
         uiHome.style("color","#fff");
         uiHome.style("color","#fff");
         uiLeft.style("fill","#fff");
@@ -1023,56 +1030,58 @@ function draw() {
       }
 //点击back后
 
-//wave generate
+// generate
     if(bgOpacity>=2.99&&canvas_mark==1){
-      strokeWeight(vol*5);
-      if(wave_cursor_x<(window_Width/2+window_Height*16/27-5)&&wave_gao<window_Height*5/6-20){
-        for(j=0;j<=waveform.length;j++){
-          wave_old_cursor_x = wave_cursor_x;
-          wave_old_cursor_y[j] = wave_cursor_y[j];
+      if(animatemark2==0){
+        strokeWeight(vol*5);
+        if(wave_cursor_x<(window_Width/2+window_Height*16/27-5)&&wave_gao<window_Height*5/6-20){
+          for(j=0;j<=waveform.length;j++){
+            wave_old_cursor_x = wave_cursor_x;
+            wave_old_cursor_y[j] = wave_cursor_y[j];
 
+          }
+
+
+
+          wave_cursor_x+=1; 
+          for(i=0;i<=waveform.length;i++){
+            wave_handdraw+=random(-0.08,0.08);
+            if(vol>=0&&vol<0.02){
+              stroke(201,208,214,100);
+            }
+            if(vol>=0.02&&vol<0.03){
+              stroke(143,163,170,100);
+            }
+            if(vol>=0.03&&vol<0.04){
+              stroke(86,108,121,100);
+            }
+            if(vol>=0.04&&vol<0.05){
+              stroke(62,82,91,100);
+            }
+            if(vol>=0.05&&vol<0.06){
+              stroke(41,55,68,100);
+            }
+            if(vol>=0.06){
+              stroke(14,30,42,100);
+            }          
+            if(vol<=0.06){
+              wave_cursor_y[i] = wave_gao+wave_handdraw+random(-6,6);
+            }  
+            if(vol>0.06){
+              wave_cursor_y[i] = wave_gao+wave_handdraw+random(-vol*100,6);
+            }                          
+            line(wave_old_cursor_x,wave_old_cursor_y[i],wave_cursor_x,wave_cursor_y[i]); 
+          }
         }
 
-
-
-        wave_cursor_x+=1; 
-        for(i=0;i<=waveform.length;i++){
-          wave_handdraw+=random(-0.08,0.08);
-          if(vol>=0&&vol<0.02){
-            stroke(201,208,214,100);
-          }
-          if(vol>=0.02&&vol<0.03){
-            stroke(143,163,170,100);
-          }
-          if(vol>=0.03&&vol<0.04){
-            stroke(86,108,121,100);
-          }
-          if(vol>=0.04&&vol<0.05){
-            stroke(62,82,91,100);
-          }
-          if(vol>=0.05&&vol<0.06){
-            stroke(41,55,68,100);
-          }
-          if(vol>=0.06){
-            stroke(14,30,42,100);
-          }          
-          if(vol<=0.06){
-            wave_cursor_y[i] = wave_gao+wave_handdraw+random(-6,6);
-          }  
-          if(vol>0.06){
-            wave_cursor_y[i] = wave_gao+wave_handdraw+random(-vol*100,6);
-          }                          
-          line(wave_old_cursor_x,wave_old_cursor_y[i],wave_cursor_x,wave_cursor_y[i]); 
+        if(wave_cursor_x>(window_Width/2+window_Height*16/27-5)){
+          wave_cursor_x=window_Width/2-window_Height*16/27+4;
+          wave_gao+=10;
         }
-      }
-
-      if(wave_cursor_x>(window_Width/2+window_Height*16/27-5)){
-        wave_cursor_x=window_Width/2-window_Height*16/27+4;
-        wave_gao+=10;
       }
     }
-//wave generate
-
+// generate
+    
 }
 
 
