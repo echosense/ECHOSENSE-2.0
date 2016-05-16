@@ -196,9 +196,40 @@ var wave_gao;
 var wave_handdraw=0;
 //wave声明
 
+//ring声明
+var ring_old_cursor_x=[];
+var ring_old_cursor_y=[];
+var ring_cursor_x=[];
+var ring_cursor_y=[];
+var ring_angle=0;
+var ring_w=3.14/180;
+var ring_r=5;
+var ring_handdraw=0;
+var ring_a=1;
+var ring_b=1;
+var ring_z=1/40;
+//ring声明
+
+//cosmos声明
+var cosmos_old_cursor_x=[];
+var cosmos_old_cursor_y=[];
+var cosmos_cursor_x=[];
+var cosmos_cursor_y=[];
+var cosmos_angle=0;
+var cosmos_w=3.14/180;
+var cosmos_r=5;
+var cosmos_handdraw=0;
+var cosmos_a=1;
+var cosmos_b=1;
+var cosmos_c=0;
+var cosmos_d=0;
+var cosmos_z=1/50;
+var cosmos_y=1/40;
+//cosmos声明
+
 
 function preload(){
-  sound = loadSound('audio/Echoes of Nature - Pebble Beach.mp3');
+  sound = loadSound('audio/theme of universe.mp3');
   //sound_wave = loadSound('audio/Echoes of Nature - Pebble Beach.mp3');
 
   //bg = loadImage("bg1.png");
@@ -361,8 +392,23 @@ function setup(){
 
   //wave声明
   wave_gao = window_Height/2;
-  wave_cursor_x=window_Width/2-window_Height*16/27+4;
+  wave_cursor_x=window_Width/2-window_Height*16/27+14;
   //wave声明
+
+  //ring,cosmos声明
+  for(i=0;i<=15;i++){
+    ring_cursor_x[i]=window_Width/2;
+    ring_cursor_y[i]=window_Height/2;
+    ring_old_cursor_x[i]=window_Width/2;
+    ring_old_cursor_y[i]=window_Height/2;
+    cosmos_cursor_x[i]=window_Width/2;
+    cosmos_cursor_y[i]=window_Height/2;
+    cosmos_old_cursor_x[i]=window_Width/2;
+    cosmos_old_cursor_y[i]=window_Height/2;
+  }
+  //ring,cosmos声明
+
+ 
 
   frameRate(60);
   sound.amp(1);
@@ -538,8 +584,7 @@ function draw() {
 
       //O
       
-      //push();
-      //stroke(4,52,3);
+
       
       if(n_cursor_x3<=window_Height/4+240){
         for(i=0;i<=waveform.length;i++){
@@ -955,7 +1000,19 @@ function draw() {
         if(canvas_mark==0){
           clear();
           wave_gao+window_Height/2;
-          wave_cursor_x=window_Width/2-window_Height*16/27+4;
+          wave_cursor_x=window_Width/2-window_Height*16/27+14;
+          cosmos_r=5;
+          ring_r=5;
+          for(i=0;i<=waveform.length;i++){
+          ring_cursor_x[i]=window_Width/2;
+          ring_cursor_y[i]=window_Height/2;
+          ring_old_cursor_x[i]=window_Width/2;
+          ring_old_cursor_y[i]=window_Height/2;
+          cosmos_cursor_x[i]=window_Width/2;
+          cosmos_cursor_y[i]=window_Height/2;
+          cosmos_old_cursor_x[i]=window_Width/2;
+          cosmos_old_cursor_y[i]=window_Height/2;
+  }
           homeCanvas.style("opacity",1);
           homeCanvas.style("z-index",4);
           canvas_mark=1;
@@ -1032,9 +1089,10 @@ function draw() {
 
 // generate
     if(bgOpacity>=2.99&&canvas_mark==1){
+      //wave
       if(animatemark2==0){
         strokeWeight(vol*5);
-        if(wave_cursor_x<(window_Width/2+window_Height*16/27-5)&&wave_gao<window_Height*5/6-20){
+        if(wave_cursor_x<(window_Width/2+window_Height*16/27-15)&&wave_gao<window_Height*5/6-15){
           for(j=0;j<=waveform.length;j++){
             wave_old_cursor_x = wave_cursor_x;
             wave_old_cursor_y[j] = wave_cursor_y[j];
@@ -1069,16 +1127,120 @@ function draw() {
             }  
             if(vol>0.06){
               wave_cursor_y[i] = wave_gao+wave_handdraw+random(-vol*100,6);
-            }                          
+            }
+                      
             line(wave_old_cursor_x,wave_old_cursor_y[i],wave_cursor_x,wave_cursor_y[i]); 
           }
         }
 
-        if(wave_cursor_x>(window_Width/2+window_Height*16/27-5)){
-          wave_cursor_x=window_Width/2-window_Height*16/27+4;
+        if(wave_cursor_x>(window_Width/2+window_Height*16/27-15)){
+          wave_cursor_x=window_Width/2-window_Height*16/27+14;
           wave_gao+=10;
         }
       }
+      //wave
+
+
+      //ring
+      if(animatemark2==1&&ring_r<window_Height/3-30){
+        strokeWeight(vol*5);
+
+        for(j=0;j<=waveform.length;j++){
+          ring_old_cursor_x[j] = ring_cursor_x[j];
+          ring_old_cursor_y[j] = ring_cursor_y[j];
+        }
+
+        ring_a+=random(-0.0008,0.0008);
+        ring_b+=random(-0.0008,0.0008);
+
+
+        for(i=0;i<=waveform.length;i++){
+            
+              stroke(14,30,42,100);
+            
+
+            ring_handdraw+=random(-0.16,0.16);
+
+            ring_cursor_x[i] = ring_b*(ring_r+random(-5-ring_r/50,5+ring_r/50)+ring_handdraw)*cos(ring_angle)+window_Width/2;
+            ring_cursor_y[i] = ring_a*(ring_r+random(-5-ring_r/50,5+ring_r/50)+ring_handdraw)*sin(ring_angle)+window_Height/2;  
+            line(ring_old_cursor_x[i],ring_old_cursor_y[i],ring_cursor_x[i],ring_cursor_y[i]);  
+
+
+        }
+        ring_r+=ring_z;
+        ring_z-=1/600000;
+
+        ring_angle+=1.8/ring_r;
+      }
+      //ring
+
+      //cosmos
+      if(animatemark2==2&&cosmos_r<window_Height/3-30){
+        strokeWeight(vol/5);
+        stroke(14,30,42,100);
+        for(j=0;j<=waveform.length;j++){
+          cosmos_old_cursor_x[j] = cosmos_cursor_x[j];
+          cosmos_old_cursor_y[j] = cosmos_cursor_y[j];
+        }
+
+
+        if(cosmos_r<105){
+          cosmos_a+=random(-0.0008,0.0008);
+          cosmos_b+=random(-0.0008,0.0008);
+
+
+          for(i=0;i<=waveform.length;i++){
+            stroke(0,0,0,120);
+            cosmos_handdraw+=random(-0.08,0.08);
+
+              cosmos_cursor_x[i] = cosmos_b*(cosmos_r+random(-5-cosmos_r/50,5+cosmos_r/50)+cosmos_handdraw)*cos(cosmos_angle)+window_Width/2;
+              cosmos_cursor_y[i] = cosmos_a*(cosmos_r+random(-5-cosmos_r/50,5+cosmos_r/50)+cosmos_handdraw)*sin(cosmos_angle)+window_Height/2;  
+              line(cosmos_old_cursor_x[i],cosmos_old_cursor_y[i],cosmos_cursor_x[i],cosmos_cursor_y[i]);  
+
+
+          }
+        cosmos_r+=cosmos_z;
+        cosmos_z-=1/600000;  
+        }
+        if(cosmos_r>105){
+
+          if(cosmos_c==0){
+            cosmos_a+=0.006;
+          }
+          if(cosmos_a>=1.4){
+            cosmos_c=1;
+          }
+          if(cosmos_c==1){
+            cosmos_a=1.4;
+          }
+          if(cosmos_d==0){
+            cosmos_b-=0.006;
+          }
+          if(cosmos_b<=0.25){
+            cosmos_d=1;
+          }
+          if(cosmos_d==1){
+            cosmos_b=0.25;
+          }
+
+          for(i=0;i<=waveform.length;i++){
+            stroke(0,0,0,80);
+            cosmos_handdraw+=random(-0.16,0.16);
+
+              cosmos_cursor_x[i] = cosmos_a*(cosmos_r+random(-8-cosmos_r/50,8+cosmos_r/50)+cosmos_handdraw)*cos(cosmos_angle)+window_Width/2;
+              cosmos_cursor_y[i] = cosmos_b*(cosmos_r+random(-8-cosmos_r/50,8+cosmos_r/50)+cosmos_handdraw)*sin(cosmos_angle)+window_Height/2;  
+              line(cosmos_old_cursor_x[i],cosmos_old_cursor_y[i],cosmos_cursor_x[i],cosmos_cursor_y[i]);  
+
+
+          }
+        cosmos_r+=cosmos_y;
+        cosmos_y-=1/600000;   
+        }
+
+
+        cosmos_angle+=1.5/cosmos_r;
+      }
+        //cosmos
     }
 // generate
     
