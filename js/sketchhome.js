@@ -184,7 +184,9 @@ var pathe;
 var pathf;
 var animatemark2=0;
 var arrow_left;
-var arrow_right; 
+var arrow_right;
+var loading_mark=0;
+var cir;
 //首页声明
 
 //wave声明
@@ -320,6 +322,9 @@ function setup(){
     back_mark=0;
   }
   
+  var cir=document.getElementById('cir');
+  cir=select('#cir')
+  
   arrow_left=select('#arrow_left')
   var arrow_left_=document.getElementById('arrow_left');
 
@@ -454,8 +459,13 @@ function setup(){
 }
 
 
-function draw() {
 
+function draw() {
+    var cir=document.getElementById('cir');
+    cir=select('#cir');
+    if(loading_mark==0){
+    cir.style("opacity",0); 
+    }
     var waveform = fft.waveform();
     var vol = sound.getLevel();
 
